@@ -8,38 +8,61 @@ import UsersPage from "./pages/UsersPage";
 import ProjectsPage from "./pages/ProjectPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
+import InvitePage from "./pages/InvitePage";
 
-function App(){
-   return(
- <BrowserRouter>
-    <ToastContainer 
-        position="top-right" 
-        autoClose={3000} 
-        theme="colored" 
-      />
-    <Routes>
-      <Route path="/" element={<LoginPage/>}/>
-      <Route path="/dashboard" element={
-        <ProtectedRoute>
-          <Dashboard/>
-        </ProtectedRoute>
-      }/>
-      <Route path="/users" element={
-        <ProtectedRoute>
-          <AdminRoute>
-            <UsersPage/>
-          </AdminRoute>
-        </ProtectedRoute>
-      } />
 
-      <Route path="/projects" element={<ProtectedRoute>
-        <ProjectsPage/>
-      </ProtectedRoute>} />
-      <Route path="/register" element={<Register/>}/>
-    </Routes>
-    
-    </BrowserRouter>
-
-   )
+interface AppProps {
+  toggleTheme: () => void;
+  mode: "light" | "dark";
 }
-export default App
+
+function App({ toggleTheme, mode }: AppProps) {
+  return (
+    <BrowserRouter>
+      <ToastContainer position="top-right" autoClose={3000} theme={mode} />
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard toggleTheme={toggleTheme} mode={mode} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <UsersPage toggleTheme={toggleTheme} mode={mode} />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/projects"
+          element={
+            <ProtectedRoute>
+              <ProjectsPage toggleTheme={toggleTheme} mode={mode} />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/invite"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <InvitePage />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
