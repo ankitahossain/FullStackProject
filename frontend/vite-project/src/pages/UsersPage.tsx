@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import {type RootState } from "../app/store";
 
 const UsersPage = () => {
   const { token } = useSelector((state: RootState) => state.auth);

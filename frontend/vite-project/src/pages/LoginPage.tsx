@@ -1,39 +1,39 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import axios from "axios";
-import { TextField,Button,Container,Typography} from '@mui/material';
+import { TextField, Button, Container, Typography } from '@mui/material';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { loginSuccess} from "../features/authSlice";
+import { loginSuccess } from "../features/auth/authSlice";
 
-const LoginPage = ()=>{
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
+const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
-   const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-    const handleLogin = async() =>{
-    try{
-        const response = await axios.post(
-            "http://localhost:4000/auth/login",
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/auth/login",
         {
-            email,password,
+          email, password,
         }
-        )
-        console.log("RESPONSE DATA:",response.data);
+      )
+      console.log("RESPONSE DATA:", response.data);
 
-        dispatch(loginSuccess(response.data));
-        alert("Login successfull!")
-        navigate("/dashboard")
+      dispatch(loginSuccess(response.data));
+      alert("Login successfull!")
+      navigate("/dashboard")
 
     }
-    catch(error:any){
-       console.log(error.response);
-       alert(error.response?.data?.message || "Login failed");
+    catch (error: any) {
+      console.log(error.response);
+      alert(error.response?.data?.message || "Login failed");
     }
-}
-    return(
-         <Container maxWidth="sm">
+  }
+  return (
+    <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>
         Login
       </Typography>
@@ -58,8 +58,8 @@ const LoginPage = ()=>{
       <Button variant="contained" fullWidth onClick={handleLogin}>
         Login
       </Button>
-         </Container>
-    )
+    </Container>
+  )
 }
 
 

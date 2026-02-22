@@ -1,7 +1,7 @@
 import { Typography, Button, Container, Box } from "@mui/material"; // Added Box here
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState } from "../app/store";
-import { logout } from "../features/authSlice";
+import { logout } from "../features/auth/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -57,9 +57,9 @@ const Dashboard = () => {
           Manage Projects
         </Button>
 
-        <Button 
-          variant="contained" 
-          color="error" 
+        <Button
+          variant="contained"
+          color="error"
           onClick={handleLogout}
         >
           Logout
