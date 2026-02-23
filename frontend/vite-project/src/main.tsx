@@ -1,67 +1,40 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import Dashboard from "./pages/DashBoard";
-import Register from "./pages/RegisterPage";
-import ProtectedRoute from "./routes/ProtectedRoutes";
-import AdminRoute from "./routes/AdminRoutes";
-import UsersPage from "./pages/UsersPage";
-import ProjectsPage from "./pages/ProjectPage";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import InvitePage from "./pages/InvitePage";
 
-interface AppProps {
-  toggleTheme: () => void;
-  mode: "light" | "dark";
-}
+import React, { useState, useMemo } from "react"; 
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import App from './App';
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { getTheme } from "./theme";
 
-function App({ toggleTheme, mode }: AppProps) {
+export const Root = () => {
+ // Change this line in your Root component:
+const [mode, setMode] = useState<"light" | "dark">(
+  () => (localStorage.getItem("theme") as "light" | "dark") || "light"
+);
+
+  const toggleTheme = () => {
+    const newMode = mode === "light" ? "dark" : "light";
+    console.log("Switching to:",newMode);
+    setMode(newMode);
+    localStorage.setItem("theme", newMode);
+  };
+
+  const theme = useMemo(() => getTheme(mode), [mode]);
+
   return (
-    <BrowserRouter>
-      <ToastContainer position="top-right" autoClose={3000} theme={mode} />
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard toggleTheme={toggleTheme} mode={mode} />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/users"
-          element={
-            <ProtectedRoute>
-              <AdminRoute>
-                <UsersPage toggleTheme={toggleTheme} mode={mode} />
-              </AdminRoute>
-            </ProtectedRoute>
-          }
-        />
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
 
-        <Route
-          path="/projects"
-          element={
-            <ProtectedRoute>
-              <ProjectsPage toggleTheme={toggleTheme} mode={mode} />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/invite"
-          element={
-            <ProtectedRoute>
-              <AdminRoute>
-                <InvitePage />
-              </AdminRoute>
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+        <App toggleTheme={toggleTheme} mode={mode} />
+      </ThemeProvider>
+    </Provider>
   );
-}
+}; 
 
-export default App;
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <Root />
+  </React.StrictMode>
+);

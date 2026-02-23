@@ -47,13 +47,14 @@ const DashBoard = ({ toggleTheme, mode }: DashboardProps) => {
       </Typography>
 
       {/* Box provides a wrapper for spacing and layout */}
-      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: 2 }}>
         {user?.role === "ADMIN" && (
           <Button
             component={Link}
             to="/users"
             variant="contained"
-            color="primary"
+            // Custom Teal color
+            sx={{ backgroundColor: "#009688", '&:hover': { backgroundColor: "#00796b" } }}
           >
             Manage Users
           </Button>
@@ -63,24 +64,29 @@ const DashBoard = ({ toggleTheme, mode }: DashboardProps) => {
           component={Link}
           to="/projects"
           variant="contained"
-          color="primary"
+          // Custom Indigo color
+          sx={{ backgroundColor: "#3f51b5", '&:hover': { backgroundColor: "#303f9f" } }}
         >
           Manage Projects
         </Button>
 
         {user?.role === "ADMIN" && (
-  <Button
-    component={Link}
-    to="/invite"
-    variant="contained"
-    color="secondary"
-    sx={{ mt: 2, mr: 2 }}
-  >
-    Send Invite
-  </Button>
-)}
+          <Button
+            component={Link}
+            to="/invite"
+            variant="contained"
+            // Custom Amber/Gold color
+            sx={{ backgroundColor: "#ffc107", color: "black", '&:hover': { backgroundColor: "#ffb300" } }}
+          >
+            Send Invite
+          </Button>
+        )}
 
-        <Button variant="contained" color="error" onClick={handleLogout}>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "#f44336", '&:hover': { backgroundColor: "#d32f2f" } }}
+          onClick={handleLogout}
+        >
           Logout
         </Button>
       </Box>
