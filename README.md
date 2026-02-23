@@ -1,6 +1,6 @@
 # FullStack Task
 
-A role-based project management system.
+🧑‍🎓 A role-based project management system.
 
 ### Tech Stack
 Node.js
@@ -79,7 +79,7 @@ cd vite-project
 npm install
 ```
 
-## Start the development server
+## 🏄🏿Start the development server
 
 ```python
 #port 4000
